@@ -1,6 +1,6 @@
 # Aim Teleporter #
 
-A short and sweet script to teleport yourself where you are aiming
+A short and sweet [FiveM](https://fivem.net) script to teleport yourself where you are aiming.
 
 ## Setup ##
 
@@ -19,9 +19,9 @@ Finally, you can then use the exported `TeleportAtAimPoint` in any other ressour
 
 The controls are intuitive, and works just like your typical GTA controls.
 
-| Input                                 | Controls                  |
-|---------------------------------------|---------------------------|
-| <kbd>E</kbd> <small>(while aiming)</small>           |  Teleport                 |
+| Input                                         | Controls      |
+|-----------------------------------------------|---------------|
+| <kbd>E</kbd> <small>(while aiming)</small>    |  Teleport     |
 
 **_BEWARE_ THAT THE SCRIPT <big style="color:red">DOESN'T PREVENT</big>  PLAYERS FORM <big style="color:red" >TAKING DAMAGES</big> AFTER TELEPORTING. <big style="color:red">USE IT AT YOUR OWN RISK</big>**
 
