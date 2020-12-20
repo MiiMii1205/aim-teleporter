@@ -29,7 +29,8 @@ function TeleportAtAimPoint()
         Citizen.CreateThread(function()
 
             local gameplayCamRotRad = GetGameplayCamRot(2) * DEG_2_RAD;
-            local queryId = StartShapeTestRay(GetEntityCoords(playerPed), p1 + vector3(-math.sin(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.cos(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.sin(gameplayCamRotRad.x)) * RAYCAST_LENGTH, -1, playerPed, 1)
+            local playerCoords = GetEntityCoords(playerPed)
+            local queryId = StartShapeTestRay(playerCoords, playerCoords + vector3(-math.sin(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.cos(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.sin(gameplayCamRotRad.x)) * RAYCAST_LENGTH, -1, playerPed, 1)
             local _, wasHit, hitPos, _, _ = GetShapeTestResult(queryId);
 
             if wasHit == 1 then SetEntityCoords(playerPed, hitPos, true, true, true, false) end
