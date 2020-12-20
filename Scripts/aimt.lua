@@ -9,46 +9,30 @@ RAYCAST_LENGTH = 100;
 GIVE_ALL_PLAYERS_WEAPONS = true
 DEG_2_RAD = math.pi / 180
 ENABLE_AIM_TELEPORT = true
+STARTUP_STRING = ('%s v%s initialized'):format(GetCurrentResourceName(), GetResourceMetadata(GetCurrentResourceName(), 'version', 0))
 
 -- Variables --
 local playerPed = PlayerPedId()
 local playerId = PlayerId()
-local isCalculating = false
 
-if ENABLE_AIM_TELEPORT and GIVE_ALL_PLAYERS_WEAPONS then
-    GiveWeaponToPed(playerPed, 'WEAPON_PISTOL', 0, false, true);
+function GivePlayerAnEmptyPistol()
+    if ENABLE_AIM_TELEPORT and GIVE_ALL_PLAYERS_WEAPONS then
+        return GiveWeaponToPed(playerPed, 'WEAPON_PISTOL', 0, false, true);
+    end
 end
 
 function TeleportAtAimPoint()
 
-    if (not isCalculating) and IsPlayerFreeAiming(playerId) then
+    if IsPlayerFreeAiming(playerId) then
 
-        local pedCoords = GetEntityCoords(playerPed);
-        local gameplayCamRotRad = GetGameplayCamRot(2) * DEG_2_RAD;
-
-        local p1 = pedCoords
         -- Small hack for a direction-based raycast --
-        local p2 = p1 + vector3(-math.sin(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.cos(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.sin(gameplayCamRotRad.x)) * RAYCAST_LENGTH;
-
         Citizen.CreateThread(function()
 
-            local queryId = StartShapeTestRay(
-                    p1.x, p1.y, p1.z,
-                    p2.x, p2.y, p2.z,
-                    -1,
-                    playerPed,
-                    1
-            )
-
-            isCalculating = true
-
+            local gameplayCamRotRad = GetGameplayCamRot(2) * DEG_2_RAD;
+            local queryId = StartShapeTestRay(GetEntityCoords(playerPed), p1 + vector3(-math.sin(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.cos(gameplayCamRotRad.z) * math.abs(math.cos(gameplayCamRotRad.x)), math.sin(gameplayCamRotRad.x)) * RAYCAST_LENGTH, -1, playerPed, 1)
             local _, wasHit, hitPos, _, _ = GetShapeTestResult(queryId);
 
-            if wasHit == 1 then
-                SetEntityCoords(playerPed, hitPos.x, hitPos.y, hitPos.z, true, true, true, false);
-            end
-
-            isCalculating = false
+            if wasHit == 1 then SetEntityCoords(playerPed, hitPos, true, true, true, false) end
 
         end)
 
@@ -62,26 +46,19 @@ AddEventHandler('playerSpawned', function()
     playerId = PlayerId()
     playerPed = PlayerPedId()
 
-    if ENABLE_AIM_TELEPORT and GIVE_ALL_PLAYERS_WEAPONS then
-        GiveWeaponToPed(playerPed, 'WEAPON_PISTOL', 0, false, true);
-    end
+    return GivePlayerAnEmptyPistol()
 
 end)
 
+GivePlayerAnEmptyPistol()
+
 Citizen.CreateThread(function()
 
-    print(('%s v%s initialized'):format(GetCurrentResourceName(), GetResourceMetadata(GetCurrentResourceName(), 'version', 0)))
+    print(STARTUP_STRING)
 
-    while true do
-
+    while ENABLE_AIM_TELEPORT do
         Citizen.Wait(0)
-
-        if ENABLE_AIM_TELEPORT and IsControlJustPressed(1, TELEPORT_KEY) then
-
-            TeleportAtAimPoint()
-
-        end
-
+        if IsControlJustPressed(1, TELEPORT_KEY) then TeleportAtAimPoint() end
     end
 
 end)
