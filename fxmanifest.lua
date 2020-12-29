@@ -3,8 +3,8 @@ fx_version 'cerulean'
 game  'gta5'
 
 author 'MiiMii1205'
-description 'A simple script for aiming teleportation'
-version '1.0.0'
+description 'A short and sweet script to teleport yourself where you are aiming.'
+version '1.1.0'
 
 client_script 'Scripts/aimt.lua'
 export 'TeleportAtAimPoint'

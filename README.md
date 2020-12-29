@@ -4,27 +4,42 @@ A short and sweet [FiveM](https://fivem.net) script to teleport yourself where y
 
 ## Setup ##
 
-Just clone this repo to your ressource folder of your [FiveM](https://fivem.net) server. You might also need to edit your server.cfg to auto load the resource.
+Just clone this repo to your ressource folder of your [FiveM](https://fivem.net) server. You might also need to edit your `server.cfg` to auto-load the resource.
 
-Remember that this resource doesn't do any permission management. By default, it allows **EVERY** player to teleport.
+### Permissions ###
 
-To change this, you can set the `ENABLE_AIM_TELEPORT` <small>(line 11)</small> value in the `Scripts/aimt.lua` file.
+Remember that Aim Teleporter **doesn't** do any permission management. By default, it allows **EVERY** player to teleport.
 
-By default, the scrip will automatically give any player an empty pistol. To change this, you can set the `GIVE_ALL_PLAYERS_WEAPONS` <small>(line 9)</small> value in the `Scripts/aimt.lua` file.
-Disabling `ENABLE_AIM_TELEPORT` <small>(line 11)</small> wil also prevent players to get pistols too.
+To prevent this, you can set the `ENABLE_AIM_TELEPORT` value in the `Scripts/aimt.lua` file to `false`.
 
-Finally, you can then use the exported `TeleportAtAimPoint` in any other ressources, granted that your server loads Aim Teleporter first.
+Then, you can use the exported `TeleportAtAimPoint` function to your liking, granted that your server loads Aim Teleporter first.
+
+This will effectively makes Aim Teleporter act more like a library than a standalone ressource.
+
+### Player Aiming Weapon ###
+
+By default, Aim Teleporter will automatically give any player an empty pistol to enable then to aim freely.
+
+To change this, you can set the `GIVE_ALL_PLAYERS_WEAPONS` value in the `Scripts/aimt.lua` file to `false`.
+
+Disabling `ENABLE_AIM_TELEPORT` will also prevent players to get pistols too.
+
+### Sounds ###
+
+Aim Teleporter plays, by default, a sounds when a player teleports.
+
+To mute Aim Teleporter, just set the `ENABLE_TELEPORT_SOUND` value to `false`.
 
 ## Controls ##
-
-The controls are intuitive, and works just like your typical GTA controls.
 
 | Input                                         | Controls      |
 |-----------------------------------------------|---------------|
 | <kbd>E</kbd> <small>(while aiming)</small>    |  Teleport     |
 
-**_BEWARE_ THAT THE SCRIPT <big style="color:red">DOESN'T PREVENT</big>  PLAYERS FORM <big style="color:red" >TAKING DAMAGES</big> AFTER TELEPORTING. <big style="color:red">USE IT AT YOUR OWN RISK</big>**
+**_BEWARE_ THAT THE SCRIPT <big style="color:red">DOESN'T PREVENT</big> PLAYERS FORM <big style="color:red" >TAKING DAMAGES</big> AFTER TELEPORTING. <big style="color:red">USE IT AT YOUR OWN RISK</big>**
 
 ## Exports ##
 
-The resource also exports a `TeleportAtAimPoint` function that can be called to immediately teleport to the aiming position from any other resources.
+Aim Teleporter also exports a `TeleportAtAimPoint` function that can be called to immediately teleport to the aiming position from any other resources.
+
+[5m]: (https://fivem.net) "FiveM"
