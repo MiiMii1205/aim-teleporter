@@ -1,10 +1,10 @@
 # Aim Teleporter #
 
-A short and sweet [FiveM](https://fivem.net) script to teleport yourself where you are aiming.
+A short and sweet [FiveM][5m] script to teleport yourself where you are aiming.
 
 ## Setup ##
 
-Just clone this repo to your ressource folder of your [FiveM](https://fivem.net) server. You might also need to edit your `server.cfg` to auto-load the resource.
+Just clone this repo to your ressource folder of your [FiveM][5m] server. You might also need to edit your `server.cfg` to auto-load the resource.
 
 ### Permissions ###
 
