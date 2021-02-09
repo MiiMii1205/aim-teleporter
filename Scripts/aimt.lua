@@ -54,12 +54,15 @@ end
 
 -- Reset globals once the player spawn (or in our case, respawn) --
 AddEventHandler('playerSpawned', function()
-
     playerId = PlayerId()
     playerPed = PlayerPedId()
-
     return GivePlayerAnEmptyPistol()
+end)
 
+AddEventHandler('RCC:newPed', function()
+    playerPed = PlayerPedId()
+    playerId = PlayerId()
+    return GivePlayerAnEmptyPistol()
 end)
 
 GivePlayerAnEmptyPistol()
