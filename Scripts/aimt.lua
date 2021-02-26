@@ -62,16 +62,16 @@ function UpdateAimingInstruction(isEnable)
     if isAimingInstructionActive ~= isEnable then
         isAimingInstructionActive = isEnable;
         if isAimingInstructionActive then
-            return emit('instructor:show-instruction', TELEPORT_KEY, RESOURCE_NAME)
+            TriggerEvent('instructor:show-instruction', TELEPORT_KEY, RESOURCE_NAME)
         else
-            return emit('instructor:hide-instruction', TELEPORT_KEY, RESOURCE_NAME)
+            TriggerEvent('instructor:hide-instruction', TELEPORT_KEY, RESOURCE_NAME)
         end
     end
 end
 
 ---ManageInstructor Manages the Instructor
 function ManageInstructor()
-    UpdateAimingInstruction(IsPlayerFreeAiming(playerId));
+    UpdateAimingInstruction(IsPlayerFreeAiming(playerId) ~= false);
 end
 
 -- Reset globals once the player spawn (or in our case, respawn) --
@@ -96,17 +96,22 @@ Citizen.CreateThread(function()
     TriggerEvent('msgprinter:addMessage', STARTUP_HTML_STRING, RESOURCE_NAME);
 
     if INSTRUCTOR_ENABLED then
+        TriggerEvent('instructor:add-instruction', TELEPORT_KEY, "Teleport", RESOURCE_NAME, isAimingInstructionActive);
+
         while ENABLE_AIM_TELEPORT do
             Citizen.Wait(0)
             if IsControlJustPressed(1, TELEPORT_KEY) then TeleportAtAimPoint() end
             ManageInstructor();
         end
+
+        TriggerEvent('instructor:flush', RESOURCE_NAME);
     else
         while ENABLE_AIM_TELEPORT do
             Citizen.Wait(0)
             if IsControlJustPressed(1, TELEPORT_KEY) then TeleportAtAimPoint() end
         end
     end
+
 
 end)
 
